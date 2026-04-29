@@ -1,0 +1,679 @@
+/* ============================================================
+   박람회 이벤트 - 글로벌 스타일 (SK Broadband 소호 톤)
+   - 모바일 우선 (max-width 480px)
+   - 시스템 폰트 스택 (외부 폰트 X — 약한 인터넷 대응)
+   - Indigo 강조 (톤다운) + 회색 셸 + 둥근 모서리
+   - 등급 색상은 기존 색감 유지 (Bronze 동색 / Silver 회색 / Gold 골드)
+   ============================================================ */
+
+:root {
+  /* ----- Page / Shell ----- */
+  --bg-page:   #f5f5f5;             /* 외부 회색 */
+  --bg-shell:  #ffffff;             /* 박스 기본 흰색 */
+  --bg-subtle: #f3f4f7;             /* 카드 내부 살짝 다른 회색 */
+
+  /* ----- 텍스트 ----- */
+  --text-primary:     #191f28;
+  --text-secondary:   #6b6c6f;
+  --text-placeholder: #7f8490;
+
+  /* ----- Accent (indigo — 메인 강조, 톤다운) ----- */
+  --accent:        #4f46e5;          /* indigo-600 — CTA/미션 완료/강조 */
+  --accent-hover:  #4338ca;          /* indigo-700 — hover/active */
+  --accent-light:  #818cf8;          /* indigo-400 — 밝은 변형 */
+  --accent-bg:     #eef2ff;          /* indigo-50 — 옅은 배경 */
+  --accent-border: #c7d2fe;          /* indigo-200 — 테두리 */
+
+  /* ----- Border ----- */
+  --border:        #e7e7e7;
+  --border-strong: #e0e0e0;
+
+  /* ----- 등급별 박스 내부 배경 (기존 톤 유지) ----- */
+  --bg-bronze: #fed7aa;
+  --bg-silver: #e2e8f0;
+  --bg-gold:   #fef3c7;
+
+  /* ----- 등급 텍스트/배지 색상 (전경) ----- */
+  --tier-bronze: #b45309;
+  --tier-silver: #475569;
+  --tier-gold:   #b45309;
+
+  /* ----- Shadow ----- */
+  --shadow-card:  0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 4px 28px rgba(25, 31, 40, 0.15);
+  --shell-shadow: 0 2px 12px rgba(25, 31, 40, 0.06);
+
+  /* ----- Radius ----- */
+  --radius-sm:   4px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-pill: 9999px;
+
+  /* ----- Transition ----- */
+  --transition-bg:  background-color 0.5s ease;
+  --transition-btn: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+  /* ----- 레이아웃 ----- */
+  --shell-max-width: 480px;
+  --padding-x: 20px;
+  --padding-y: 20px;
+  --gap-base:  20px;
+
+  /* ----- 안전 영역 ----- */
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  color-scheme: light;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Malgun Gothic', system-ui, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ---------- 모바일 우선 reset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  letter-spacing: -0.3px;             /* SK 톤 — 살짝 좁은 자간 */
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+  font-weight: 500;
+}
+
+#app {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  letter-spacing: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+}
+
+/* ============================================================
+   .app-shell — 모바일 박스 컨테이너
+   ============================================================ */
+
+.app-shell {
+  max-width: var(--shell-max-width);
+  min-width: 320px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-shell);
+  box-shadow: var(--shell-shadow);
+  transition: var(--transition-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 등급별 박스 내부 배경 — body가 아닌 .app-shell에 적용 */
+body[data-tier='bronze'] .app-shell {
+  background-color: var(--bg-bronze);
+}
+body[data-tier='silver'] .app-shell {
+  background-color: var(--bg-silver);
+}
+body[data-tier='gold'] .app-shell {
+  background-color: var(--bg-gold);
+}
+
+/* 모바일 (≤ 480px) — 풀 화면, 그림자 제거 */
+@media (max-width: 480px) {
+  .app-shell {
+    box-shadow: none;
+  }
+}
+
+/* ============================================================
+   화면 공통 컨테이너
+   ============================================================ */
+
+.initial-screen,
+.main-screen,
+.done-screen {
+  flex: 1;
+  width: 100%;
+  padding:
+    calc(var(--padding-y) + var(--safe-top))
+    var(--padding-x)
+    calc(24px + var(--safe-bottom))
+    var(--padding-x);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-base);
+}
+
+/* ============================================================
+   .btn — 공용 버튼 컴포넌트
+   - .btn-primary  (보라 채움, 기본 CTA)
+   - .btn-secondary(흰 배경 + 회색 테두리, 모달 취소 등)
+   - .btn-full     (width: 100%)
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-btn);
+  letter-spacing: -0.3px;
+  border: 1px solid transparent;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+.btn-primary:active {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+.btn-primary:disabled {
+  background-color: var(--border-strong);
+  border-color: var(--border-strong);
+  color: var(--text-placeholder);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.btn-secondary:hover {
+  background-color: var(--bg-subtle);
+}
+.btn-secondary:active {
+  background-color: var(--bg-subtle);
+}
+
+/* MainScreen [지급 완료 처리] — 화면 하단 고정 느낌 */
+.main-screen .btn {
+  margin-top: auto;
+}
+
+/* ============================================================
+   InitialScreen (00번)
+   ============================================================ */
+
+.initial-screen {
+  justify-content: center;
+  text-align: center;
+}
+
+.initial-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.initial-title {
+  font-size: 1.5rem;          /* 24px */
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+  letter-spacing: -0.4px;
+}
+
+.initial-subtitle {
+  font-size: 0.875rem;        /* 14px */
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+
+.initial-notice {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8125rem;       /* 13px */
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ============================================================
+   MainScreen (01-05번)
+   ============================================================ */
+
+.clock {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* ---------- 안내 배너 ---------- */
+
+.banner {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.banner-expired {
+  background-color: #fff0f0;
+  border-color: #f8c5c6;
+  color: #e6282b;
+  font-weight: 600;
+}
+
+/* ---------- N/7 카운터 + 등급 배지 ---------- */
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0;
+}
+
+.counter-count {
+  font-size: 4rem;            /* 64px — SK 톤의 큰 강조 숫자 */
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+}
+
+.counter-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ---------- 등급 배지 (sm/lg 통합) ---------- */
+
+.tier-badge {
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 1px solid currentColor;
+}
+
+.tier-badge-sm {
+  margin-top: 4px;
+  padding: 4px 16px;
+  font-size: 0.75rem;
+  border-radius: var(--radius-pill);
+}
+
+.tier-badge-lg {
+  align-self: center;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 32px;
+  border-radius: var(--radius-lg);
+  border-width: 2px;
+  min-width: 160px;
+}
+
+.tier-badge-lg-label {
+  font-size: 2.5rem;          /* 40px */
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.tier-badge-lg-sub {
+  font-size: 0.6875rem;       /* 11px */
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* 등급별 색상 (small) */
+.tier-badge-bronze {
+  color: var(--tier-bronze);
+}
+.tier-badge-silver {
+  color: var(--tier-silver);
+}
+.tier-badge-gold {
+  color: var(--tier-gold);
+}
+
+/* 등급별 색상 (large — 배경 함께) */
+.tier-badge-lg.tier-badge-bronze {
+  background-color: #fff7ed;
+  border-color: var(--tier-bronze);
+}
+.tier-badge-lg.tier-badge-silver {
+  background-color: #f8fafc;
+  border-color: var(--tier-silver);
+}
+.tier-badge-lg.tier-badge-gold {
+  background-color: #fffbeb;
+  border-color: var(--tier-gold);
+}
+.tier-badge-lg.tier-badge-none {
+  color: var(--text-placeholder);
+  background-color: var(--bg-subtle);
+  border-color: var(--border-strong);
+}
+
+/* ---------- 미션 그리드 ---------- */
+
+.missions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.mission {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;       /* 13px */
+  font-weight: 600;
+  background-color: #ffffff;
+  color: var(--text-primary);
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: var(--transition-btn);
+  letter-spacing: -0.3px;
+}
+
+/* idle */
+.mission-idle {
+  cursor: pointer;
+}
+.mission-idle:hover {
+  border-color: var(--accent);
+  background-color: var(--accent-bg);
+  color: var(--accent);
+}
+.mission-idle:active {
+  border-color: var(--accent);
+  background-color: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* locking — 1초 잠금 (회색) */
+.mission-locking {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  border-color: var(--border);
+  pointer-events: none;
+  cursor: progress;
+}
+
+/* done — 보라 채움 + ✓ */
+.mission-done {
+  background-color: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  pointer-events: none;
+  cursor: default;
+}
+.mission-done .mission-check {
+  color: #ffffff;
+}
+
+/* disabled — 만료 시 회색 + 반투명 */
+.mission-disabled {
+  background-color: var(--bg-subtle);
+  color: var(--text-placeholder);
+  border-color: var(--border);
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.mission-label {
+  display: inline-block;
+}
+
+.mission-check {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.mission-dots {
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  animation: mission-dots-pulse 1s ease-in-out infinite;
+}
+
+@keyframes mission-dots-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ---------- 카운트다운 ---------- */
+
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.countdown-label {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.countdown-time {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 2rem;            /* 32px */
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+}
+
+/* 만료 시 카운트다운 — 회색 톤으로 죽임 */
+.countdown-expired .countdown-time {
+  color: var(--text-secondary);
+}
+.countdown-expired .countdown-label {
+  color: var(--text-placeholder);
+}
+
+/* ---------- 사생활 보호 안내 ---------- */
+
+.privacy {
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ============================================================
+   DoneScreen (07번)
+   ============================================================ */
+
+.done-screen {
+  justify-content: center;
+  text-align: center;
+}
+
+.thanks-title {
+  font-size: 1.375rem;        /* 22px */
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+  color: var(--text-primary);
+  letter-spacing: -0.4px;
+}
+
+.thanks-sub {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ---------- 요약 박스 ---------- */
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  text-align: left;
+  background-color: var(--bg-subtle);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+.summary-key {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.summary-val {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   PayoutModal (06번) — 지급 완료 확인 모달
+   ============================================================ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(25, 31, 40, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--padding-x);
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  padding: 28px 24px;
+  max-width: 320px;
+  width: 100%;
+}
+
+.modal-title {
+  font-size: 1.125rem;        /* 18px */
+  font-weight: 700;
+  margin: 0 0 12px;
+  text-align: center;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.modal-message {
+  text-align: center;
+  color: var(--text-secondary);
+  margin: 0 0 24px;
+  line-height: 1.5;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* 모달 안의 .btn은 동일 너비로 확장 */
+.modal-buttons .btn {
+  flex: 1;
+  padding: 14px;
+}
