@@ -677,3 +677,36 @@ body[data-tier='gold'] .app-shell {
   flex: 1;
   padding: 14px;
 }
+
+/* ============================================================
+   ErrorBoundary 폴백
+   ============================================================ */
+
+.error-fallback {
+  flex: 1;
+  width: 100%;
+  padding:
+    calc(var(--padding-y) + var(--safe-top))
+    var(--padding-x)
+    calc(24px + var(--safe-bottom))
+    var(--padding-x);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.error-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.error-message {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+}

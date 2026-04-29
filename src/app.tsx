@@ -3,6 +3,7 @@ import { useEntryGuard } from './hooks/useEntryGuard';
 import { InitialScreen } from './components/InitialScreen';
 import { MainScreen } from './components/MainScreen';
 import { DoneScreen } from './components/DoneScreen';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import {
   loadState,
   saveState,
@@ -42,16 +43,18 @@ export function App() {
   }, [refresh]);
 
   return (
-    <div class="app-shell">
-      {screen === 'initial' && <InitialScreen onStart={handleStart} />}
-      {screen === 'main' && state && (
-        <MainScreen
-          state={state}
-          onMissionDone={handleMissionDone}
-          onPayout={handlePayout}
-        />
-      )}
-      {screen === 'done' && state && <DoneScreen state={state} />}
-    </div>
+    <ErrorBoundary>
+      <div class="app-shell">
+        {screen === 'initial' && <InitialScreen onStart={handleStart} />}
+        {screen === 'main' && state && (
+          <MainScreen
+            state={state}
+            onMissionDone={handleMissionDone}
+            onPayout={handlePayout}
+          />
+        )}
+        {screen === 'done' && state && <DoneScreen state={state} />}
+      </div>
+    </ErrorBoundary>
   );
 }
